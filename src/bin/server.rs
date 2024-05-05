@@ -27,7 +27,8 @@ async fn handle_connection(
                     Some(Ok(msg)) => {
                         if let Some(text) = msg.as_text() {
                             println!("From client {addr:?} {text:?}");
-                            bcast_tx.send(text.into())?;
+                            let combined = addr.to_string() + ": " + text;
+                            bcast_tx.send(combined.into())?;
                         }
                     }
                     Some(Err(err)) => return Err(err.into()),
